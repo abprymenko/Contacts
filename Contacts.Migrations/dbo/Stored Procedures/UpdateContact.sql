@@ -1,18 +1,9 @@
-USE [Contact]
-GO
-
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
--- =============================================
+﻿-- =============================================
 -- Author:		Andrii Prymenko
--- Create date: 11.10.2023
--- Description:	CRUD UPDATE
+-- Create date: 12.10.2023
+-- Description:	INSERT Contact
 -- =============================================
-CREATE PROCEDURE [dbo].[UpdateContact] 
+CREATE PROCEDURE UpdateContact 
 	@id UNIQUEIDENTIFIER,
 	@firstname VARCHAR(20),
 	@lastname VARCHAR(20),
@@ -31,6 +22,3 @@ BEGIN
             WHERE  id = @id
 	SET @rowcount = @@ROWCOUNT
 END
-GO
-
-

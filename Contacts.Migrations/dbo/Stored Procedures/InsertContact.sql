@@ -1,16 +1,7 @@
-USE [Contact]
-GO
-
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
--- =============================================
+﻿-- =============================================
 -- Author:		Andrii Prymenko
--- Create date: 11.10.2023
--- Description:	CRUD INSERT
+-- Create date: 12.10.2023
+-- Description:	INSERT Contact
 -- =============================================
 CREATE PROCEDURE [dbo].[InsertContact] 
 	@firstname VARCHAR(20),
@@ -26,6 +17,3 @@ BEGIN
             VALUES(@firstname, @lastname, @cellnumber)
 	SET @rowcount = @@ROWCOUNT
 END
-GO
-
-

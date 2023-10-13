@@ -40,7 +40,7 @@ namespace Contacts.WebAPI.Controllers
         }
         [HttpPost]
         [Route("post-contact")]
-        public async Task<int> PostContact(JObject contact)
+        public async Task<int> PostContact(IContact contact)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace Contacts.WebAPI.Controllers
         }
         [HttpPut]
         [Route("put-contact")]
-        public async Task<int> PutContact(JObject contact)
+        public async Task<int> PutContact(IContact contact)
         {
             try
             {
@@ -114,21 +114,18 @@ namespace Contacts.WebAPI.Controllers
         /// <param name="isEdit"></param>
         /// <exception cref="ArgumentException"/>
         /// <returns><see cref="DynamicParameters"/></returns>
-        private DynamicParameters GetParameters(JObject contact, bool isEdit = true)
+        private DynamicParameters GetParameters(IContact contact, bool isEdit = true)
         {
             try
             {
                 var param = new DynamicParameters();
                 if (isEdit)
                 {
-                    var isId = Guid.TryParse(contact["id"]?.Value<string>(), out Guid id);
-                    if (!isId)
-                        throw new ArgumentException(nameof(id));
-                    param.Add("@id", id, DbType.Guid, ParameterDirection.Input);
+                    param.Add("@id", contact.Id, DbType.Guid, ParameterDirection.Input);
                 }
-                param.Add("@firstname", contact["firstName"]?.Value<string>(), DbType.String, ParameterDirection.Input);
-                param.Add("@lastname", contact["lastName"]?.Value<string>(), DbType.String, ParameterDirection.Input);
-                param.Add("@cellnumber", contact["cellNumber"]?.Value<string>(), DbType.String, ParameterDirection.Input);
+                param.Add("@firstname", contact.FirstName, DbType.String, ParameterDirection.Input);
+                param.Add("@lastname", contact.LastName, DbType.String, ParameterDirection.Input);
+                param.Add("@cellnumber", contact.CellNumber, DbType.String, ParameterDirection.Input);
                 param.Add("@rowcount", 0, DbType.Int32, ParameterDirection.Output);
                 return param;
             }
