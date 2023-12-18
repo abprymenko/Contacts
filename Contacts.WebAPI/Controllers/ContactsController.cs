@@ -27,7 +27,7 @@ namespace Contacts.WebAPI.Controllers
         #region Api methods
         [HttpGet]
         [Route("get-contacts")]
-        public async Task<IEnumerable<IContact>> GetContacts()
+        public async Task<IEnumerable<IContact>?> GetContacts()
         {
             try
             {
@@ -62,12 +62,6 @@ namespace Contacts.WebAPI.Controllers
                 var param = GetParameters(contact);
                 await _repository.ExecuteAsync("[dbo].[UpdateContact]", param);
                 var count = param.Get<int>("@rowcount");
-                if (count == 0)
-                {
-                    param = GetParameters(contact, false);
-                    await _repository.ExecuteAsync("[dbo].[InsertContact]", param);
-                    count = param.Get<int>("@rowcount");
-                }
                 return count;
             }
             catch (Exception)
@@ -126,6 +120,7 @@ namespace Contacts.WebAPI.Controllers
                 param.Add("@firstname", contact.FirstName, DbType.String, ParameterDirection.Input);
                 param.Add("@lastname", contact.LastName, DbType.String, ParameterDirection.Input);
                 param.Add("@cellnumber", contact.CellNumber, DbType.String, ParameterDirection.Input);
+                param.Add("@email", contact.Email, DbType.String, ParameterDirection.Input);
                 param.Add("@rowcount", 0, DbType.Int32, ParameterDirection.Output);
                 return param;
             }

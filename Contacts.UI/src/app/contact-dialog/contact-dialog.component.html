@@ -1,0 +1,21 @@
+<form action="index.html" method="post" class="scroll">
+    <h1>Contact form</h1>
+    <fieldset>
+        <legend><span class="number">1</span>Basic info</legend>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" [(ngModel)]="newContact.FirstName" name="firstName" placeholder="Daniel*"
+            required>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" [(ngModel)]="newContact.LastName" name="lastName" placeholder="Hoffmann*"
+            required>
+        <label for="cellNumber">Cell Number:</label>
+        <input type="text" id="cellNumber" [(ngModel)]="newContact.CellNumber" name="cellNumber"
+            placeholder="+491510000000*" required>
+        <legend><span class="number">2</span>Additional info</legend>
+        <label for="email">Email:</label>
+        <input type="text" id="email" [(ngModel)]="newContact.Email" name="email" placeholder="dhoffmann@email.com*"
+            required>
+    </fieldset>
+    <button type="submit" mat-button (click)="onAddClick()">Save</button>
+    <button type="submit" mat-button (click)="onNoClick()">Cancel</button>
+</form>

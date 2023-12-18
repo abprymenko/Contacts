@@ -1,0 +1,41 @@
+<div class="center">
+    <h1 class="roboto">Contacts</h1>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="search-container">
+            <i class="material-icons">search</i>
+            <input type="search" id="search" name="serch" placeholder="Search" (input)="searchContacts($event)">
+        </div>
+        <div class=" colmd3">
+            <button mat-button (click)="openContactDialog()" class="roboto">Add New Contact</button>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="scroll colmd4">
+            <ul>
+                <li class="roboto" *ngFor="let contact of contacts" (click)="selectContact(contact)">
+                    {{ contact.FirstName }} {{ contact.LastName }}
+                </li>
+            </ul>
+        </div>
+        <div class="colmd4">
+            <div class="roboto marginDetails">
+                <h1>Details</h1>
+                <p>{{ selectedContact?.FirstName }} {{ selectedContact?.LastName }}</p>
+                <p>{{ selectedContact?.CellNumber }} </p>
+                <p>{{ selectedContact?.Email }}</p>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <button class="colmd3" *ngIf="selectedContact" (click)="deleteContact()">Delete Contact</button>
+                    <button class="colmd3" *ngIf="selectedContact" (click)="openContactDialog(false)">Edit
+                        Contact</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

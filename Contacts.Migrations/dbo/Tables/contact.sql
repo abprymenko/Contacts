@@ -3,6 +3,7 @@
     [firstname]  NVARCHAR (MAX)   NOT NULL,
     [lastname]   NVARCHAR (MAX)   NOT NULL,
     [cellnumber] NVARCHAR (450)   NOT NULL,
+    [email] NVARCHAR (30) DEFAULT 'qwerty@email.com'  NOT NULL,
     CONSTRAINT [PK_Contact_Id] PRIMARY KEY CLUSTERED ([id] ASC)
 );
 

@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Gajraj+One&family=Lobster&family=Roboto:wght@700&family=Tilt+Prism&display=swap');
+
+.roboto {
+    font-family: 'Roboto', sans-serif;
+}
+
+.right {
+    display: flex;
+    justify-content: flex-end;
+    margin: 25px;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.scroll {
+    overflow-y: scroll;
+    height: 500px;
+}
+
+button {
+    padding: 19px 39px 18px 39px;
+    color: #FFF;
+    background-color: #4bc970;
+    font-size: 18px;
+    text-align: center;
+    font-style: normal;
+    border-radius: 5px;
+    border: 1px solid #3ac162;
+    border-width: 1px 1px 3px;
+    box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.1) inset;
+    margin-bottom: 10px;
+}
+
+.colmd3 {
+    position: relative;
+    padding-right: 20px;
+    padding-left: 10px;
+    width: 25%;
+    margin-left: 25px;
+}
+
+.colmd4 {
+    position: relative;
+    padding-right: 20px;
+    padding-left: 10px;
+    width: 45%;
+    margin-left: 25px;
+}
+
+.marginDetails {
+    margin-left: 25px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+ul li {
+    margin: 40px 0;
+}
+
+ul li:hover {
+    color: rgb(40, 99, 194);
+}
+
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+}
+
+input[type="search"] {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    font-size: 16px;
+    height: auto;
+    margin: 0;
+    outline: 0;
+    padding: 15px;
+    width: 100%;
+    background-color: #e8eeef;
+    color: #8a97a0;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
+}
+
+.search-container {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    align-items: center;
+    width: 27%;
+    margin-left: 30px;
+}
+
+.material-icons {
+    margin-right: 5px;
+}

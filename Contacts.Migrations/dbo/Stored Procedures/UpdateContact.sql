@@ -1,13 +1,14 @@
 ﻿-- =============================================
 -- Author:		Andrii Prymenko
--- Create date: 12.10.2023
+-- Create date: 18.12.2023
 -- Description:	INSERT Contact
 -- =============================================
-CREATE PROCEDURE UpdateContact 
+CREATE   PROCEDURE [dbo].[UpdateContact] 
 	@id UNIQUEIDENTIFIER,
 	@firstname VARCHAR(20),
 	@lastname VARCHAR(20),
 	@cellnumber VARCHAR(20),
+	@email VARCHAR(20),
 	@rowcount INT OUTPUT
 AS
 BEGIN
@@ -18,7 +19,12 @@ BEGIN
             SET    id = @id,
 				   firstname = @firstname,
                    lastname = @lastname,
-                   cellnumber = @cellnumber
+                   cellnumber = @cellnumber,
+				   email = @email
             WHERE  id = @id
 	SET @rowcount = @@ROWCOUNT
+	if(@rowcount = 0)
+	BEGIN
+	EXECUTE [dbo].[InsertContact] @firstname, @lastname, @cellnumber, @email, @rowcount OUTPUT
+	END
 END
