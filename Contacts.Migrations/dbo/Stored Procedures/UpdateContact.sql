@@ -1,7 +1,7 @@
-﻿-- =============================================
+-- =============================================
 -- Author:		Andrii Prymenko
 -- Create date: 18.12.2023
--- Description:	INSERT Contact
+-- Description:	UPDATE Contact
 -- =============================================
 CREATE   PROCEDURE [dbo].[UpdateContact] 
 	@id UNIQUEIDENTIFIER,
