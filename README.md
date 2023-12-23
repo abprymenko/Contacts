@@ -1,6 +1,14 @@
 # Contacts
 CRUD operations (Angular, .Net Core 6 WebAPI, SQLExpress)
+A-SQL proj:
+---------
+1)Add sql project in visual studio;
+2)Add proj variables;
+3)Select db server;
+4)Publish sql proj (to get DACPAC).
 
+B-Angular proj:
+---------------
 Install Node.js:
 ---------------
 https://nodejs.org/en/download
