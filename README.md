@@ -1,5 +1,6 @@
 # Contacts
 CRUD operations (Angular, .Net Core 6 WebAPI, SQLExpress)
+
 A-SQL proj:
 ---------
 1)Add sql project in visual studio;
