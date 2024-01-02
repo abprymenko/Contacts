@@ -75,3 +75,10 @@ Add interfaces:
 ---------------
 C:\Users\user\Downloads\GitHubProjects\Contacts\Contacts.UI\src\app\interfaces>ng generate interface contact
 CREATE src/app/interfaces/contact.ts (29 bytes)
+
+
+UI Folders:
+---------
+C:\Users\user\Desktop\Contacts\Contacts.UI\Contacts.UI.zip\node_modules
+.angular
+node_modules
