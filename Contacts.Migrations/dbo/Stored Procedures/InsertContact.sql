@@ -1,4 +1,4 @@
-﻿-- =============================================
+-- =============================================
 -- Author:		Andrii Prymenko
 -- Create date: 02.01.2023
 -- Description:	INSERT Contact
@@ -19,9 +19,6 @@ DECLARE
         @ErrorProcedure  VARCHAR(200)
 BEGIN TRY
 	BEGIN TRANSACTION
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
 	CREATE TABLE #TempTable
         (
             Id UNIQUEIDENTIFIER
