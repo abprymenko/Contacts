@@ -3,7 +3,7 @@ namespace Contacts.WebAPI.Controllers
     #region Usings
     using Contacts.Contracts.BusinessObjects.DTO;
     using Contacts.Contracts.Managers.Builders;
-    using Contacts.Contracts.Providing;
+    using Contacts.Contracts.Services.Repositories;
     using Dapper;
     using Microsoft.AspNetCore.Mvc;
     using System.Data;

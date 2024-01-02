@@ -1,4 +1,4 @@
-﻿namespace Contacts.Contracts.Providing
+﻿namespace Contacts.Contracts.Services.Repositories
 {
     #region IRepository
     public interface IRepository : IDisposable

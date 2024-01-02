@@ -1,10 +1,10 @@
-﻿namespace Contacts.Contracts.Services
+﻿namespace Contacts.Contracts.Services.Configuration
 {
     #region Usings
     using Microsoft.Extensions.Configuration;
     #endregion
 
-    #region JsonSettings
+    #region IJsonSettings
     public interface IJsonSettings
     {
         IConfiguration? Configuration { get; }
