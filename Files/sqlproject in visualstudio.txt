@@ -1,0 +1,24 @@
+1)Open MSQL Server Management Studio;
+2)Select your_database;
+3)right click => 'Tasks' => select 'Extract Data-tier Application' 
+		=> next... => choose where save this *.dacpac => next => next => finish;
+4)DBLayer => add SQL Server Database Project => Patterns.Migrations;
+5)Right click by Patterns.Migrations project and select option 'Import' 
+	=> 'Database' or 'Data-tier Application (*.dacpac)'
+6)Make some changes;
+7)Publish;
+
+USE [Contacts]
+GO
+DECLARE @date DATETIME = GETDATE();
+DECLARE	@thread VARCHAR(255) = '2';
+DECLARE	@level VARCHAR (50)= 'Error';
+DECLARE	@logger VARCHAR (255)= 'Test logger';
+DECLARE	@message VARCHAR (4000)= 'Test message';
+DECLARE	@exception VARCHAR (2000)= 'Test exception';
+DECLARE @rowcount INT;
+EXEC [dbo].[InsertLog] @date, @thread, @level, @logger, @message, @exception, @rowcount OUTPUT;
+ 
+
+PRINT CAST (@rowcount as varchar);
+GO

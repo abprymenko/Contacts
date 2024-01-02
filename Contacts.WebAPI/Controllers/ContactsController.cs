@@ -2,10 +2,10 @@ namespace Contacts.WebAPI.Controllers
 {
     #region Usings
     using Contacts.Contracts.BusinessObjects.DTO;
+    using Contacts.Contracts.Managers.Builders;
     using Contacts.Contracts.Providing;
     using Dapper;
     using Microsoft.AspNetCore.Mvc;
-    using Newtonsoft.Json.Linq;
     using System.Data;
     #endregion
 
@@ -15,23 +15,46 @@ namespace Contacts.WebAPI.Controllers
     {
         #region Private : Fields
         private readonly IRepository _repository;
+        private readonly ISqlParameters _sqlParameters;
         #endregion
 
         #region Public : Constructor
-        public ContactsController(IRepository repository)
+        public ContactsController(IRepository repository, ISqlParameters sqlParameters)
         {
             _repository = repository;
+            _sqlParameters = sqlParameters;
         }
         #endregion
 
         #region Api methods
         [HttpGet]
         [Route("get-contacts")]
-        public async Task<IEnumerable<IContact>?> GetContacts()
+        public async Task<IActionResult> GetContacts()
         {
             try
             {
-                return await _repository.QueryAsync<IContact>("[dbo].[GetContacts]");
+                var contacts = await _repository.QueryAsync<IContact>("[dbo].[GetContacts]");
+                return contacts.Any()
+                            ? Ok(contacts)
+                            : Ok("No contacts found");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        [HttpGet]
+        [Route("get-contact-by-id")]
+        public async Task<IActionResult> GetContactById(Guid contactId)
+        {
+            try
+            {
+                var param = new DynamicParameters();
+                param.Add("@id", contactId, DbType.Guid, ParameterDirection.Input);
+                var contacts = await _repository.QueryAsync<IContact>("[dbo].[GetContactById]", param);
+                return !contacts.Any()
+                            ? NotFound()
+                            : Ok(contacts.FirstOrDefault());
             }
             catch (Exception)
             {
@@ -40,13 +63,16 @@ namespace Contacts.WebAPI.Controllers
         }
         [HttpPost]
         [Route("post-contact")]
-        public async Task<int> PostContact(IContact contact)
+        public async Task<IActionResult> PostContact(IContact contact)
         {
             try
             {
-                var param = GetParameters(contact, false);
+                var param = _sqlParameters.GetContactParameters(contact, false);
                 await _repository.ExecuteAsync("[dbo].[InsertContact]", param);
-                return param.Get<int>("@rowcount");
+                contact.Id = param.Get<Guid>("@insertedId");
+                return contact.Id.Equals(Guid.Empty)
+                            ? Conflict("Failed to insert contact!")
+                            : new CreatedAtActionResult(nameof(GetContactById), "Contacts", new { contactId = contact.Id }, contact);
             }
             catch (Exception)
             {
@@ -55,14 +81,16 @@ namespace Contacts.WebAPI.Controllers
         }
         [HttpPut]
         [Route("put-contact")]
-        public async Task<int> PutContact(IContact contact)
+        public async Task<IActionResult> PutContact(IContact contact)
         {
             try
             {
-                var param = GetParameters(contact);
+                var param = _sqlParameters.GetContactParameters(contact);
                 await _repository.ExecuteAsync("[dbo].[UpdateContact]", param);
-                var count = param.Get<int>("@rowcount");
-                return count;
+                contact.Id = param.Get<Guid>("@updatedId");
+                return contact.Id.Equals(Guid.Empty)
+                            ? Conflict($"Failed to update contact!")
+                            : new CreatedAtActionResult(nameof(GetContactById), "Contacts", new { contactId = contact.Id }, contact);
             }
             catch (Exception)
             {
@@ -72,59 +100,20 @@ namespace Contacts.WebAPI.Controllers
         }
         [HttpDelete]
         [Route("delete-contact")]
-        public async Task<int> DeleteContact(Guid id)
+        public async Task<IActionResult> DeleteContact(Guid contactId)
         {
             try
             {
                 var param = new DynamicParameters();
-                param.Add("@id", id, DbType.Guid, ParameterDirection.Input);
-                param.Add("@rowcount", 0, DbType.Int32, ParameterDirection.Output);
+                param.Add("@id", contactId, DbType.Guid, ParameterDirection.Input);
+                param.Add("@rowcount", dbType: DbType.Int32, direction: ParameterDirection.Output);
                 await _repository.ExecuteAsync("[dbo].[DeleteContact]", param);
-                return param.Get<int>("@rowcount");
+                var count =  param.Get<int>("@rowcount");
+                return count < 1 
+                            ? NotFound("No contact found for deletion!")
+                            : NoContent();
             }
             catch (Exception)
-            {
-                throw;
-            }
-        }
-        #endregion
-
-        #region Private : Methods
-        /// <summary>
-        /// Gets DynamicParameters.
-        /// </summary>
-        /// <param name="contact">
-        /// <example>
-        /// <code>
-        /// {
-        ///     "id": "<see cref="Guid"/>",
-        ///     "firstName": "<see cref="string"/>",
-        ///     "lastName": "<see cref="string"/>",
-        ///     "cellNumber": "<see cref="string"/>"
-        /// }
-        /// </code>
-        /// </example>
-        /// </param>
-        /// <param name="isEdit"></param>
-        /// <exception cref="ArgumentException"/>
-        /// <returns><see cref="DynamicParameters"/></returns>
-        private DynamicParameters GetParameters(IContact contact, bool isEdit = true)
-        {
-            try
-            {
-                var param = new DynamicParameters();
-                if (isEdit)
-                {
-                    param.Add("@id", contact.Id, DbType.Guid, ParameterDirection.Input);
-                }
-                param.Add("@firstname", contact.FirstName, DbType.String, ParameterDirection.Input);
-                param.Add("@lastname", contact.LastName, DbType.String, ParameterDirection.Input);
-                param.Add("@cellnumber", contact.CellNumber, DbType.String, ParameterDirection.Input);
-                param.Add("@email", contact.Email, DbType.String, ParameterDirection.Input);
-                param.Add("@rowcount", 0, DbType.Int32, ParameterDirection.Output);
-                return param;
-            }
-            catch (ArgumentException)
             {
                 throw;
             }

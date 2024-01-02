@@ -4,11 +4,11 @@
     using Microsoft.Extensions.Configuration;
     #endregion
 
-    #region Interface of JsonSettings
+    #region JsonSettings
     public interface IJsonSettings
     {
-        IConfiguration Configuration { get; }
-        string GetString(string name);
+        IConfiguration? Configuration { get; }
+        string? GetString(string name);
         int? GetInt(string key);
         long? GetLong(string key);
     }

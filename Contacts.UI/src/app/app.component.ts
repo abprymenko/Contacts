@@ -61,7 +61,7 @@ export class AppComponent {
   }
   deleteContact() {
     if (this.selectedContact) {
-      this.http.delete(this.APIUrl + 'delete-contact?id=' + this.selectedContact.Id).subscribe(data => {
+      this.http.delete(this.APIUrl + 'delete-contact?contactId=' + this.selectedContact.Id).subscribe(data => {
         this.selectedContact = undefined;
         this.refreshContacts();
       })
